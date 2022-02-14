@@ -2,6 +2,7 @@
 require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\LoginController;
+use Model\User;
 use MVC\Router;
 
 $router = new Router();
@@ -22,5 +23,18 @@ $router->post('/recuperar', [LoginController::class, 'recuperar']);
 $router->get('/register', [LoginController::class, 'register']);
 $router->post('/register', [LoginController::class, 'register']);
 
+// Confirmar Cuenta
+$router->get('/confirm', [LoginController::class, 'confirm']);
+$router->get('/message', [LoginController::class, 'message']);
+
+$router->get('/test', function(){
+   $user = User::where('email', 'giancarlozapata13@gmail.com');
+
+   echo '<pre>';
+   var_dump($user->roles());
+   echo '<p/re>';
+
+   
+});
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

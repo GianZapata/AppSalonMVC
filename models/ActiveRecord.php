@@ -83,9 +83,9 @@ class ActiveRecord {
     // Sincroniza BD con Objetos en memoria
     public function sincronizar($args=[]) { 
         foreach($args as $key => $value) {
-          if(property_exists($this, $key) && !is_null($value)) {
+            if(property_exists($this, $key) && !is_null($value)) {
             $this->$key = $value;
-          }
+            }
         }
     }
 
@@ -123,6 +123,12 @@ class ActiveRecord {
         return array_shift( $resultado ) ;
     }
 
+    public static function where($column, $value) {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE ${column} = '${value}'";
+        $result = self::consultarSQL($query);
+        return array_shift( $result );
+    }
+
     // crea un nuevo registro
     public function crear() {
         // Sanitizar los datos
@@ -138,8 +144,8 @@ class ActiveRecord {
         // Resultado de la consulta
         $resultado = self::$db->query($query);
         return [
-           'resultado' =>  $resultado,
-           'id' => self::$db->insert_id
+            'resultado' =>  $resultado,
+            'id' => self::$db->insert_id
         ];
     }
 
@@ -172,4 +178,18 @@ class ActiveRecord {
         return $resultado;
     }
 
+    public function belongsToMany($related, $table = null, $foreignPivotKey = null, $relatedKey = null) {
+        // UserRoles
+        $table = $table ?: strtolower(static::$tabla) . '_' . strtolower($related::$tabla);
+        $foreignPivotKey = $foreignPivotKey ?: strtolower(static::$tabla) . '_id';
+        $relatedKey = $relatedKey ?: strtolower($related::$tabla) . '_id';
+
+        // Consultar la tabla pivote
+        
+
+        // Patient::find(1245)->locations()->toSql()
+        // => "select * from `locations` inner join `patients_locations` on `locations`.`id` = `patients_locations`.`location_id` w
+        // here `patients_locations`.`patient_id` = ?"
+        
+    }
 }

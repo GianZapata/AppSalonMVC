@@ -3,7 +3,9 @@
 >Olvide Password</h1>
 <p class="descripcion-pagina text-center mb-10">Restablece tu password escribiendo tu email a continuación</p>
 
-<form action="/" method="POST">
+<?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+
+<form action="/forgot" method="POST" novalidate>
    <div 
       class="campo flex items-center mb-8 "
    >

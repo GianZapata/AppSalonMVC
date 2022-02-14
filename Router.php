@@ -39,10 +39,10 @@ class Router
 
 
         if ( $fn ) {
-            // Call user fn va a llamar una funciÃ³n cuando no sabemos cual sera
+            // Call user fn va a llamar una función cuando no sabemos cual sera
             call_user_func($fn, $this); // This es para pasar argumentos
         } else {
-            echo "PÃ¡gina No Encontrada o Ruta no vÃ¡lida";
+            echo "Página no encontrada o ruta no valida";
         }
     }
 
@@ -51,7 +51,7 @@ class Router
 
         // Leer lo que le pasamos  a la vista
         foreach ($datos as $key => $value) {
-            $$key = $value;  // Doble signo de dolar significa: variable variable, bÃ¡sicamente nuestra variable sigue siendo la original, pero al asignarla a otra no la reescribe, mantiene su valor, de esta forma el nombre de la variable se asigna dinamicamente
+            $$key = $value;  // Doble signo de dolar significa: variable variable, básicamente nuestra variable sigue siendo la original, pero al asignarla a otra no la reescribe, mantiene su valor, de esta forma el nombre de la variable se asigna dinamicamente
         }
 
         ob_start(); // Almacenamiento en memoria durante un momento...
@@ -60,5 +60,15 @@ class Router
         include_once __DIR__ . "/views/$view.php";
         $contenido = ob_get_clean(); // Limpia el Buffer
         include_once __DIR__ . '/views/layout.php';
+    }
+
+    public function redirect($route = '/')
+    {
+        header("Location: $route");
+    }
+    
+    public function getParam($name)
+    {
+        return s($_GET[$name]) ?? null;
     }
 }

@@ -3,9 +3,7 @@
 >Crear cuenta</h1>
 <p class="descripcion-pagina text-center mb-10">Llena el siguiente formulario para crear una cuenta</p>
 
-<?php
-   include_once __DIR__ . '/../templates/alertas.php';
-?>
+<?php include_once __DIR__ . '/../templates/alertas.php'; ?>
 
 <form 
    method="POST" 

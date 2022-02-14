@@ -3,10 +3,13 @@
 >Login</h1>
 <p class="descripcion-pagina text-center mb-10">Inicia Sesión con tus datos</p>
 
+<?php include_once __DIR__ . '/../templates/alertas.php'; ?>
+
 <form 
    method="POST" 
    action="/" 
    class="formulario w-full"
+   novalidate
 >
    <div 
       class="campo flex items-center mb-8 "
