@@ -1,0 +1,11 @@
+@use 'base/variables' as v;
+@use 'base/mixins' as m;
+
+.contenedor-app {
+   .imagen {
+      background-image: url('../img/1.jpg');
+   }
+   .app { 
+      width: 95%;
+   }
+}
