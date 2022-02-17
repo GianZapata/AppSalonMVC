@@ -1,8 +1,8 @@
 <?php  header('Content-Type: text/html; charset=utf-8');
 require_once __DIR__ . '/../includes/app.php';
 
+use Controllers\CitaController;
 use Controllers\LoginController;
-use Model\User;
 use MVC\Router;
 
 $router = new Router();
@@ -27,14 +27,9 @@ $router->post('/register', [LoginController::class, 'register']);
 $router->get('/confirm', [LoginController::class, 'confirm']);
 $router->get('/message', [LoginController::class, 'message']);
 
-$router->get('/test', function(){
-   $user = User::where('email', 'giancarlozapata13@gmail.com');
+// Area Privada
+$router->get('/cita', [CitaController::class, 'index']);
 
-   echo '<pre>';
-   var_dump($user->roles());
-   echo '<p/re>';
 
-   
-});
 // Comprueba y valida las rutas, que existan y les asigna las funciones del Controlador
 $router->comprobarRutas();

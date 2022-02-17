@@ -97,18 +97,18 @@
    </div>
    <input 
       value="Crear Cuenta"
-      class="block w-full md:w-auto uppercase cursor-pointer bg-cyan-500 hover:bg-cyan-700 text-white font-bold py-6 px-16 rounded focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out my-10"
+      class="block w-full md:w-auto uppercase cursor-pointer bg-sky-500 hover:bg-sky-700 text-white font-bold py-6 px-16 rounded focus:outline-none focus:shadow-outline transition-all duration-300 ease-in-out my-10"
       type="submit"   
    />
 </form>
 
 <div class="acciones text-center my-20 md:flex md:justify-between">
    <a 
-      class="block text-cyan-500 hover:text-cyan-700 mb-5 text-center" 
+      class="block text-sky-500 hover:text-sky-700 mb-5 text-center" 
       href="/"
    >¿Ya tienes una cuenta? Inicia Sesión</a>
    <a 
-      class="block text-cyan-500 hover:text-cyan-700 mb-5 text-center" 
+      class="block text-sky-500 hover:text-sky-700 mb-5 text-center" 
       href="/forgot"
    >¿Olvidaste tu contraseña?</a>
 </div>

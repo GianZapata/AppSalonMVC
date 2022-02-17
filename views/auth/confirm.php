@@ -7,7 +7,7 @@
 
 <div class="acciones text-center my-20 md:flex md:justify-between">
    <a 
-      class="block text-cyan-500 hover:text-cyan-700 mb-5 text-center" 
+      class="block text-sky-500 hover:text-sky-700 mb-5 text-center" 
       href="/"
    >Iniciar Sesión</a>
 </div>
