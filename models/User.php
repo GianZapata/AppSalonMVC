@@ -130,8 +130,7 @@ class User extends ActiveRecord {
       $this->remember_token = bin2hex(openssl_random_pseudo_bytes(15));
    }
 
-   public function checkPassAndVerified($password) {
-      
+   public function checkPassAndVerified($password) {      
       if(!password_verify($password, $this->password) || !$this->verified) {
          // Comprobar que el usuario esté verificado
          self::$alertas['error'][] = "El usuario no está verificado o la contraseña es incorrecta";

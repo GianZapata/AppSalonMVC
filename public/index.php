@@ -1,10 +1,10 @@
-<?php  header('Content-Type: text/html; charset=utf-8');
+<?php  
+header('Content-Type: text/html; charset=utf-8');
 require_once __DIR__ . '/../includes/app.php';
 
 use Controllers\APIController;
 use Controllers\CitaController;
 use Controllers\LoginController;
-use Model\User;
 use MVC\Router;
 
 $router = new Router();

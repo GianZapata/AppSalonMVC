@@ -10,16 +10,19 @@ use MVC\Router;
 class LoginController { 
    public static function login(Router $router) {
       $alertas = [];
-
+      
       if($_SERVER['REQUEST_METHOD'] === 'POST'){
          $auth = new User($_POST);
          $alertas = $auth->validateLogin();                  
          if(empty($alertas)) {
             // Comprobar que el usuario exista
             $user = User::where('email', $auth->email);
+            
             if($user->exists()) {
                // Comprobar que la contraseña sea correcta
+               
                if( $user->checkPassAndVerified($auth->password) ) {
+                  echo "Login correcto";
                   // Guardar en la sesión el usuario
                   session_start();
                   $_SESSION['id'] = $user->id;
@@ -27,7 +30,7 @@ class LoginController {
                   $_SESSION['email'] = $user->email;
                   $_SESSION['login'] = true;
                   
-                  $userRoles = UserRoles::where('user_id', $user->id)->atributos();                  
+                  $userRoles = UserRoles::where('user_id', $user->id)->atributos();                     
                   $_SESSION['role_id'] = $userRoles['role_id'];
                   $role = Role::where('id', $userRoles['role_id']);
                   
@@ -37,13 +40,13 @@ class LoginController {
                   } else {
                      $router->redirect('/cita');
                   }
-                  
-               } 
-            } else {         
-               User::setAlerta('error', 'El usuario no existe'); 
-            }            
+               }
+            } else {       
+               User::setAlerta('', 'El usuario no existe'); 
+            }          
          }
       }      
+      $alertas = array_merge($alertas, User::getAlertas());
       return $router->render('auth/login',[
          'alertas' => $alertas,
       ]);
