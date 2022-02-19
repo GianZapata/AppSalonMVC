@@ -2,9 +2,12 @@
 
 namespace Model;
 
+use PDO;
+
 class User extends ActiveRecord {
 
    protected static $tabla = 'users';
+   protected static $primaryKey = 'id';
 
    protected static $columnasDB = [
       'id', 
@@ -37,7 +40,7 @@ class User extends ActiveRecord {
       $this->phone = $args['phone'] ?? "";
       $this->verified = $args['verified'] ?? 0;
       $this->remember_token = $args['remember_token'] ?? "";
-      $this->admin = $args['admin'] ?? 0;   
+      $this->admin = $args['admin'] ?? 0;  
    }
 
    // Mensajes de validación para la creación de una cuenta
@@ -101,13 +104,22 @@ class User extends ActiveRecord {
    }
 
    public function userExists() {
-      $query = "SELECT * FROM " . self::$tabla . " WHERE email = '" . $this->email . "' LIMIT 1";
-      $result = self::$db->query($query);
-
-      if($result->num_rows > 0) {
+      $query = "SELECT * FROM " . self::$tabla . " WHERE email = :email LIMIT 1";
+      $statement = self::$db->prepare($query);
+      $statement->execute([':email' => $this->email]);
+      $result = $statement->fetchAll(PDO::FETCH_ASSOC);
+      
+      if(count($result) > 0 ) {
          self::$alertas['error'][] = "El Usuario ya está registrado";
       } 
+
       return $result;
+      // $result = self::$db->query($query);
+
+      // if($result->num_rows > 0) {
+      //    self::$alertas['error'][] = "El Usuario ya está registrado";
+      // } 
+      // return $result;
    }
 
    public function hashPassword() {
@@ -129,7 +141,4 @@ class User extends ActiveRecord {
          
    }
 
-   public function roles() {
-      return $this->belongsToMany(RoleUsers::class, 'role_users', 'user_id', 'role_id');
-   }
 }

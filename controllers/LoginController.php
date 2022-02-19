@@ -17,7 +17,7 @@ class LoginController {
          if(empty($alertas)) {
             // Comprobar que el usuario exista
             $user = User::where('email', $auth->email);
-            if($user) {
+            if($user->exists()) {
                // Comprobar que la contraseña sea correcta
                if( $user->checkPassAndVerified($auth->password) ) {
                   // Guardar en la sesión el usuario
@@ -65,7 +65,7 @@ class LoginController {
             if($user && $user->verified){
                $user->generateToken();               
                $user->guardar();
-
+               
                $mail = new Mail($user->email, $user->name, $user->remember_token );
 
                $mail->sendForgot();
@@ -128,10 +128,8 @@ class LoginController {
 
          // Revisar que alertas este vacio
          if(empty($alertas)){
-            // Verificar que el usuario no esté registrado                        
-            $result = $user->userExists();
-            
-            if($result->num_rows) { 
+            // Verificar que el usuario no esté registrado                                    
+            if($user->userExists()) { 
                $alertas = User::getAlertas();
             } else { 
                // Hash de la contraseña
@@ -142,7 +140,7 @@ class LoginController {
 
                $email = new Mail($user->email,$user->name,  $user->remember_token);
                $email->send();
-   
+               
                if($user->guardar()) {
                   $router->redirect('/message');
                }

@@ -154,22 +154,24 @@ class ActiveRecord {
         $valores = ':' . implode(', :', array_keys($atributos));
         $query = "INSERT INTO " . static::$tabla . " ({$columnas}) VALUES ({$valores})";
 
-        // Preparar la consulta
+        // Preparar la consulta       
         $statement = self::$db->prepare($query);
 
         // Vincular los valores
+        $atributosArray = [];
         foreach($atributos as $key => $value) {
-            $statement->bindValue(":${key}", $value);
+            $atributosArray[":{$key}"] = "${value}";
         }
 
         // Ejecutar la consulta
-        $resultado = $statement->execute();
+        $resultado = $statement->execute($atributosArray);
 
         // Guardar el id
         $this->{static::$primaryKey} = self::$db->lastInsertId();
         
         // Liberar la memoria
         $statement->closeCursor();
+        
         // Retornar el resultado
         return $resultado;
 
@@ -207,7 +209,7 @@ class ActiveRecord {
         // Consulta SQL
         $query = "UPDATE " . static::$tabla ." SET ";
         $query .=  join(', ', $valores );
-        $query .= " WHERE id = :" . static::$primaryKey;
+        $query .= " WHERE " . static::$primaryKey ." = :" . static::$primaryKey;
         $query .= " LIMIT 1 "; 
 
         // Actualizar BD
@@ -220,8 +222,27 @@ class ActiveRecord {
     // Eliminar un Registro por su ID
     public function eliminar() {
         // $query = "DELETE FROM "  . static::$tabla . " WHERE id = " . self::$db->escape_string($this->id) . " LIMIT 1";
-        $query = "DELETE FROM "  . static::$tabla . " WHERE id = :id LIMIT 1";
-        $resultado = self::$db->query($query);
-        return $resultado;
+        $query = "DELETE FROM "  . static::$tabla . " WHERE " . static::$primaryKey ." = :" . static::$primaryKey;        
+        $resultado = self::$db->prepare($query);        
+        $resultado->execute([":" . static::$primaryKey => $this->{static::$primaryKey}]);
+        if($resultado->rowCount() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+        // $resultado = self::$db->query($query);
+        // return $resultado;
     }
+    
+    public function exists() {
+        $query = "SELECT * FROM " . static::$tabla . " WHERE " . static::$primaryKey . " = :" . static::$primaryKey;
+        $statement = self::$db->prepare($query);
+        $statement->execute([":" . static::$primaryKey => $this->{static::$primaryKey}]);        
+        if($statement->rowCount()) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }
