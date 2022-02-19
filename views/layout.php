@@ -9,7 +9,6 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
     <div class="contenedor-app md:grid md:grid-cols-2 md:min-h-screen">
         <div class="imagen bg-cover bg-center h-80 md:h-auto">
             
@@ -18,6 +17,6 @@
             <?php echo $contenido; ?>
         </div>
     </div>
-
+    <?= $script ?? "" ; ?>
 </body>
 </html>

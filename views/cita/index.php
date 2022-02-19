@@ -5,11 +5,11 @@
 
 <div id="app">
    <nav class="tabs md:flex">
-      <button class="bg-white text-sky-600  cursor-pointer  p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300 " type="button" data-paso="1">Servicios</button>
-      <button class="bg-sky-600 hover:bg-sky-700 cursor-pointer text-white p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300 " type="button" data-paso="2">Información Cita</button>
-      <button class="bg-sky-600 hover:bg-sky-700 cursor-pointer text-white p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300 " type="button" data-paso="3">Resumen</button>
+      <button class="cursor-pointer p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300" type="button" data-paso="1">Servicios</button>
+      <button class="bg-sky-600 hover:bg-sky-700 text-white cursor-pointer p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300 " type="button" data-paso="2">Información Cita</button>
+      <button class="bg-sky-600 hover:bg-sky-700 text-white cursor-pointer  p-4 block w-full mb-4 uppercase font-bold ease-in-out transition-all duration-300 " type="button" data-paso="3">Resumen</button>
    </nav>
-   <div id="paso-1" class="seccion py-10">
+   <div id="paso-1" class="seccion py-10 hidden">
       <h2 class="text-5xl font-bold text-center my-20 mx-0">Servicios</h2>
       <p class="text-center">Elige tus servicios a continuación</p>
       <div id="servicios" class="listado-servicios"></div>
@@ -67,8 +67,7 @@
       </form>
       
    </div>
-   <div id="paso-3" class="seccion py-10 hidden">
-      
+   <div id="paso-3" class="seccion py-10 hidden">      
       <h2>Resumen</h2>
       <p>Verifica que la información sea correcta</p>
    </div>
@@ -83,3 +82,5 @@
       >Siguiente &raquo;</button>
    </div>
 </div>
+
+<?php $script = '<script src="build/js/app.js" defer></script>'; ?>
